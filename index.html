@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    
+    
+    <!-- For the Map -->
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+	<script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
+	<link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet' />
+
+
+
+
+
+    <title>Mapping Morton Village</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Javascript Modal 
+    <link href="assests/js/modal.js" rel="stylesheet">-->
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/main.css" rel="stylesheet">
+
+
+
+ <!-- Initiates Modal and Uses cookies for Dont Show Again Checkbox -->     
+<script type="text/javascript">
+ $(document).ready(function () {
+    $('#myModal').modal();
+  
+   //check cookies
+    function setCookie(){
+        var dis = document.cookie;
+        while(dis.charAt(0)==" ") dis = dis.substring(1);
+        if(dis.substring(8,13)== "false"){
+            $('#myModal').modal('hide');
+        }
+        console.log(dis.substring(8,13));
+    }
+    setCookie();    
+     
+     
+      var $check = $("input.dont").click(function(){
+        if($("input.dont").is(":checked")){
+        document.cookie = "display=false";        
+        }else{
+        document.cookie = "display=true";        
+        }
+          
+      });
+ });
+</script>
+
+
+  </head>
+
+  <body>
+
+<!-- MODAL -->
+      
+      <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-dialog modal-vertical-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Welcome to Mapping Morton Village</h4>
+                    </div>
+                    <div class="modal-body">
+                    	
+                        <p>Mapping Morton Village is a digital cultural map of the Morton Village archaeological site, located in Central Illinois. This map is an educational tool, focused on describing various aspects of archaeological research and methods. 
+                        </p>
+                        <p>Hover over the table of contents on the map (see image below) to make the layer options appear. To learn about different elements of archaeological research, toggle through each of the layers. These layers represent different excavation years at the site and highlight elements of archaeology.</p>
+			<div class="row centered">
+			<img align="center" src="photos/layersarrow.png" alt="layers arrow" title="Layers on the Map" alt="Layers" eight="8%" width="8%" hspace="20"> 
+			</div>
+			<p>Each map layer has different orange pins, representing different elements of archaeology at Morton Village, shown through various icons. When you click on the orange pins, a small textbox will appear with a brief description of the highlighted topic with an option to read more on another page. </p>
+                    	
+                    <div class="row centered">
+			<img align="center" src="photos/pin1.jpg" title="Map pin 1" lt="pin 1" height="8%" width="8%" hspace="20"> <img align="center" src="photos/pin2.jpg" title="Map pin 2" alt="pin 2" height="8%" width="8%"> 
+			</div>
+			</div>
+                    <div class="modal-footer">
+                        <label ><input class="dont" type="checkbox" name="dismiss"> Don't show again</label><br />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Explore</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+
+
+
+<!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand">Mapping Morton Village</a>
+        </div>
+        
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="index.html">MAP</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="glossary.html">GLOSSARY</a></li>
+            <li><a href="content.html">ARCHAEOLOGY</a></li>
+        
+           <li><a data-toggle="modal" data-target="#myModal2" href="#myModal2"><i class="fa fa-envelope-o"></i></a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+
+   
+
+	<div id="map">
+	
+	
+  	</style>
+		<div class="container">
+			<div class="row centered">
+				<div class="col-lg-8 col-lg-offset-2">
+					<nav id='menu-ui' class='menu-ui'></nav>
+<script>
+						
+	L.mapbox.accessToken = 'pk.eyJ1Ijoic2lsdmFuaTEiLCJhIjoiY2lsM3plbjM4M3R6Z3Z5bTM0ZXcza3hyNCJ9.rnsht5OVsoydxO8-DDdYUg';
+  var southWest = L.latLng(40.370631, -90.092830),
+  	northEast = L.latLng(40.376405, -90.085792),
+  	bounds = L.latLngBounds(southWest, northEast);
+  
+  var map = L.mapbox.map('map', null, {
+      maxBounds: bounds,
+    		maxZoom: 19,
+    		minZoom: 18
+  });
+  
+  //.setView([40.373783, -90.089136], 18);
+  
+  map.fitBounds(bounds);
+  
+  
+  var layers = {
+      Satellite: L.mapbox.tileLayer('mapbox.satellite')
+  };
+  
+  var features =  {
+      Structures: L.mapbox.featureLayer('silvani1.p89ogc1c'),
+      'Household & Salvage Archaeology': L.mapbox.featureLayer('silvani1.p89f0jgo'),
+      'Excavation Protocols': L.mapbox.featureLayer('silvani1.p89n5pmi'),
+      'Ceramics': L.mapbox.featureLayer('silvani1.p89n9049'),
+      'Artifact Analysis': L.mapbox.featureLayer('silvani1.p89nc896'),
+      'Botanical & Magnetometry': L.mapbox.featureLayer('silvani1.p89nnc1d'),
+      'Magnetometry Overlay': L.mapbox.tileLayer('silvani1.p8go9h7m'),
+      'Zooarchaeology': L.mapbox.featureLayer('silvani1.p89nphe6'),
+      'Lithics': L.mapbox.featureLayer('silvani1.p89o1o77'),
+      'Public Archaeology': L.mapbox.featureLayer('silvani1.p89o4814'),
+      //'Magnetometry': L.mapbox.tileLayer('silvani1.p8go9h7m'),
+  };
+  
+//var layerGroup = L.layerGroup(Magnetometry).addTo(map);{
+	//L.mapbox.tileLayer('silvani1.p8go9h7m').addTo(layerGroup);
+//	L.mapbox.featureLayer('silvani1.p8go9h7m').addTo(layerGroup);
+// };
+  
+  
+  layers.Satellite.addTo(map);
+  features.Structures.addTo(map);
+// layerGroup.Magnetometry.addTo(map);
+  
+  L.control.layers(layers, features).addTo(map);
+					</script>
+				</div><!-- column-->
+			</div><!-- row -->
+		</div><!-- container -->
+	</div><!-- map -->
+
+
+	
+
+
+	
+	<!-- FOOTER -->
+	<div id="fmap">
+		<div class="container">
+			<div class="row centered">
+				<img align= "left" style="PADDING-RIGHT: 3%"src="photos/anp3.png" title="MSU Department of Anthropology Logo" alt="ANP logo" eight="25%" width="25%"/>
+				<img align= "left" style="PADDING-LEFT: 3%" src="photos/chi3.png" title="Cultural Heritage Informatics Logo" alt="CHI logo" height="22%" width="22%"/>
+				<img align= "left" style="PADDING-LEFT: 10%" src="photos/dicksonmoundsHOZ.png" title="Dickson Mounds Museum Logo" alt="DMM logo" height="30%" width="30%"/>
+				<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img align="right" style="PADDING-LEFT: 3%" title="Creative Commons Logo" alt="CC logo" height="12%" width="12%" alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+				</div><!-- row -->
+		</div><!-- container -->
+	</div><!-- Footer -->
+	
+	<!-- MODAL FOR CONTACT -->
+	<!-- Modal -->
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog2">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">contact us</h4>
+	      </div>
+	      <div class="modal-body">
+		        <div class="row centered">
+		        	<p>Questions? Comments? Please Contact Us!</p>
+		        	<p>
+		        		Michigan State Univeristy<br/>
+						Department of Anthropology<br/>
+						355 Baker Hall<br/>
+						East Lansing, MI 48824<br/>
+						<a href="https://twitter.com/mortonvillage" style="color:#226666">@MortonVillage</a>
+		        	</p>
+		        	<!--<div id="mapwrap">
+		<iframe height="300" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.es/maps?t=m&amp;ie=UTF8&amp;ll=52.752693,22.791016&amp;spn=67.34552,156.972656&amp;z=2&amp;output=embed"></iframe>
+					</div>	
+		        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">Save & Go</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+
+
+
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+  </body>
+</html>
